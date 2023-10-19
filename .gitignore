@@ -399,3 +399,5 @@ FodyWeavers.xsd
 
 # My
 .temp
+.idea
+venv
