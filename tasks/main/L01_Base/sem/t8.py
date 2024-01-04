@@ -9,7 +9,8 @@
 # *********
 
 rows = int(input('Количество рядов: '))
-for i in range(0, rows):
-    points = int(i * 2 + 1)
-    spaces = (rows - 1) - i
-    print(' ' * spaces, '*' * points)
+spaces = rows
+for i in range(rows):
+    points = i * 2 + 1
+    spaces -= 1
+    print(' ' * spaces + '*' * points)
