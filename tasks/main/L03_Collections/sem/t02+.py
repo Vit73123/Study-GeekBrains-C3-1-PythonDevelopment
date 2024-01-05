@@ -2,15 +2,20 @@
 # ✔ Целое положительное число
 # ✔ Вещественное положительное или отрицательное число
 # ✔ Строку в нижнем регистре, если в строке есть хотя бы одна заглавная буква
-# ✔ Строку в нижнем регистре в остальных случаях
+# ✔ Строку в верхнем регистре в остальных случаях
 
-inp = "-123.12"
-num_string = '0123456789.-'
+# inp = '123.12'
+# inp = 'Asd'
+inp = 'ASd'
+
 if inp.isdigit():
     print(int(inp))
-# elif not inp[0] == '-'
-#     inp.count('-') == 1 and  (inp[0] == '-' or inp[0].isdigit()):
-# elif inp.count('.') == 1:
-#
-#         print(float(inp))
-
+elif '.' in inp:
+    p1, p2 = inp.split('.')
+    # lstrip('-') - удаляет слева заданный символ
+    if p1.lstrip('-').isdigit() and p2.isdigit():
+        print(float(inp))
+elif not inp.islower():
+    print(inp.lower())
+else:
+    print(inp.upper())
