@@ -1,1 +1,1 @@
-__all__ = ['chess_game_v01.py']
+__all__ = ['chess_game_v01']
