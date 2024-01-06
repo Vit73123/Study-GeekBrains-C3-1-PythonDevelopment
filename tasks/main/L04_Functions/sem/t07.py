@@ -16,10 +16,11 @@ def is_all_profit(companies: Dict[str, List[int]]) -> bool:
     :param companies:
     :return:
     '''
-    temp = []
-    for money in companies.values():
-        temp.append(sum(money) > 0)
-    return all(temp)
+    # temp = []
+    # for money in companies.values():
+    #     temp.append(sum(money) > 0)
+    # return all(temp)
+    return all([sum(value) > 0 for value in companies.values()])
 
 
 if __name__ == "__main__":
