@@ -25,7 +25,7 @@ _result = {}
 # Задание 4
 def enigma_game(
         enigma: str,
-        answers: set(),
+        answers: set,
         attempts: int
 ) -> int:
     '''
@@ -64,8 +64,8 @@ def __demo_game():
         'Сидит дед во сто шуб одет': {'лук', 'луковица'},
     }
 
-    for p, ans in enigmas.items():
-        enigma_game(p, ans, 3)
+    for e, ans in enigmas.items():
+        enigma_game(e, ans, 3)
 
 
 # Задание 6
