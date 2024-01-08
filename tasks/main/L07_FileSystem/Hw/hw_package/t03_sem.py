@@ -52,4 +52,4 @@ def compare_names_nums(f_names: str,
 
 
 if __name__ == '__main__':
-    compare_names_nums('pseudo_names.txt', 'matrix.txt', 'result.txt')
+    compare_names_nums('pseudo_names.txt', 'matrix.txt', 'data.txt')
