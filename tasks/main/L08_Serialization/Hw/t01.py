@@ -76,6 +76,37 @@
 #  {'Path': 'geekbrains/avg_list.txt', 'Type': 'File', 'Size': 21},
 #  {'Path': 'geekbrains/age_report.csv', 'Type': 'File', 'Size': 85}]
 
+# 3-я попытка
+
+#
+
+# [{'Path': 'geekbrains/california_housing_train.csv', 'Type': 'File', 'Size': 1457},
+#  {'Path': 'geekbrains/student_performance.txt', 'Type': 'File', 'Size': 21},
+#  {'Path': 'geekbrains/covid.json', 'Type': 'File', 'Size': 35228079},
+#  {'Path': 'geekbrains/input2.txt', 'Type': 'File', 'Size': 9},
+#  {'Path': 'geekbrains/avg_list.txt', 'Type': 'File', 'Size': 21},
+#  {'Path': 'geekbrains/age_report.csv', 'Type': 'File', 'Size': 85},
+#  {'Path': 'geekbrains/my_ds_projects', 'Type': 'Directory', 'Size': 684},
+#  {'Path': 'geekbrains/my_ds_projects/My-code', 'Type': 'Directory', 'Size': 342},
+#  {'Path': 'geekbrains/my_ds_projects/My-code/GB_data', 'Type': 'Directory', 'Size': 171},
+#  {'Path': 'geekbrains/my_ds_projects/My-code/GB_data/fruits.csv', 'Type': 'File', 'Size': 101},
+#  {'Path': 'geekbrains/my_ds_projects/My-code/GB_data/list_of_names.txt', 'Type': 'File', 'Size': 70}]
+#
+# Ответ:
+#
+# [{'Path': 'geekbrains/my_ds_projects/My-code/GB_data/fruits.csv', 'Type': 'File', 'Size': 101},
+#  {'Path': 'geekbrains/my_ds_projects/My-code/GB_data/list_of_names.txt', 'Type': 'File', 'Size': 70},
+#  {'Path': 'geekbrains/my_ds_projects/My-code/GB_data', 'Type': 'Directory', 'Size': 171},
+#  {'Path': 'geekbrains/my_ds_projects/My-code', 'Type': 'Directory', 'Size': 171},
+#  {'Path': 'geekbrains/my_ds_projects', 'Type': 'Directory', 'Size': 171},
+#  {'Path': 'geekbrains', 'Type': 'Directory', 'Size': 171},
+#  {'Path': 'geekbrains/california_housing_train.csv', 'Type': 'File', 'Size': 1457},
+#  {'Path': 'geekbrains/student_performance.txt', 'Type': 'File', 'Size': 21},
+#  {'Path': 'geekbrains/covid.json', 'Type': 'File', 'Size': 35228079},
+#  {'Path': 'geekbrains/input2.txt', 'Type': 'File', 'Size': 9},
+#  {'Path': 'geekbrains/avg_list.txt', 'Type': 'File', 'Size': 21},
+#  {'Path': 'geekbrains/age_report.csv', 'Type': 'File', 'Size': 85}]
+
 # Тест 2
 
 # 1-я попытка
@@ -195,6 +226,13 @@
 #  {'Path': 'geekbrains/avg_list.txt', 'Type': 'File', 'Size': 21},
 #  {'Path': 'geekbrains/age_report.csv', 'Type': 'File', 'Size': 85}]
 
+# 2-я попытка
+
+
+#
+# Ответ:
+#
+
 import json
 import os
 import pickle
@@ -215,12 +253,17 @@ def traverse_directory(directory: str) -> []:
             }
             size += file_size
         if root != directory:
-            size += sum(dir_info[os.path.join(root, d)]['Size'] for d in dirs)
-            dir_info[root] = {
+            parent = os.path.dirname(root)
+            dir_info.setdefault(root, {
                 'Path': root,
                 'Type': 'Directory',
-                'Size': size
-            }
+                'Size': 0})
+            dir_info[root]['Size'] += size
+            dir_info.setdefault(parent, {
+                'Path': parent,
+                'Type': 'Directory',
+                'Size': 0})
+            dir_info[parent]['Size'] += dir_info[root]['Size']
     return [{**dir} for dir in dir_info.values()]
 
 
@@ -342,3 +385,87 @@ if __name__ == '__main__':
 #     {'Path': 'test\\test4\\test4-1\\test4-1-3\\bbb.txt', 'Type': 'File', 'Size': 35},
 #     {'Path': 'test\\test4\\test4-1\\test4-1-3', 'Type': 'Directory', 'Size': 62},
 #     {'Path': 'test\\test4\\test4-2', 'Type': 'Directory', 'Size': 0}]
+
+# [{'Path': 'test\\test1\\test1-1\\test1-1-1\\ccc.txt', 'Type': 'File', 'Size': 46},
+#  {'Path': 'test\\test1\\test1-1\\test1-1-1\\ddd.txt', 'Type': 'File', 'Size': 63},
+#  {'Path': 'test\\test1\\test1-1\\test1-1-1', 'Type': 'Directory', 'Size': 109},
+#  {'Path': 'test\\test1\\test1-1', 'Type': 'Directory', 'Size': 325},
+#  {'Path': 'test\\test1\\test1-1\\test1-1-2\\bbb.txt', 'Type': 'File', 'Size': 35},
+#  {'Path': 'test\\test1\\test1-1\\test1-1-2', 'Type': 'Directory', 'Size': 35},
+#  {'Path': 'test\\test1\\test1-1\\test1-1-3\\aaa.txt', 'Type': 'File', 'Size': 27},
+#  {'Path': 'test\\test1\\test1-1\\test1-1-3\\bbb.txt', 'Type': 'File', 'Size': 35},
+#  {'Path': 'test\\test1\\test1-1\\test1-1-3\\ccc.txt', 'Type': 'File', 'Size': 46},
+#  {'Path': 'test\\test1\\test1-1\\test1-1-3', 'Type': 'Directory', 'Size': 108},
+#  {'Path': 'test\\test1\\test1-1\\aaa.txt', 'Type': 'File', 'Size': 27},
+#  {'Path': 'test\\test1\\test1-1\\ccc.txt', 'Type': 'File', 'Size': 46},
+#  {'Path': 'test\\test1', 'Type': 'Directory', 'Size': 1482},
+#  {'Path': 'test\\test1\\test1-2', 'Type': 'Directory', 'Size': 0},
+#  {'Path': 'test\\test1\\test1-3\\test1-3-1', 'Type': 'Directory', 'Size': 0},
+#  {'Path': 'test\\test1\\test1-3', 'Type': 'Directory', 'Size': 87},
+#  {'Path': 'test\\test1\\test1-3\\aaa.txt', 'Type': 'File', 'Size': 27},
+#  {'Path': 'test\\test1\\test1-3\\eee.txt', 'Type': 'File', 'Size': 60},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-1\\aaa.txt', 'Type': 'File', 'Size': 27},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-1\\eee.txt', 'Type': 'File', 'Size': 60},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-1', 'Type': 'Directory', 'Size': 87},
+#  {'Path': 'test\\test1\\test1-4', 'Type': 'Directory', 'Size': 839},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-2\\ccc.txt', 'Type': 'File', 'Size': 46},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-2\\ddd.txt', 'Type': 'File', 'Size': 63},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-2\\eee.txt', 'Type': 'File', 'Size': 60},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-2', 'Type': 'Directory', 'Size': 169},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-3', 'Type': 'Directory', 'Size': 0},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-4\\ccc.txt', 'Type': 'File', 'Size': 46},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-4\\eee.txt', 'Type': 'File', 'Size': 60},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-4', 'Type': 'Directory', 'Size': 106},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-5\\aaa.txt', 'Type': 'File', 'Size': 27},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-5\\bbb.txt', 'Type': 'File', 'Size': 35},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-5', 'Type': 'Directory', 'Size': 62},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-6\\aaa.txt', 'Type': 'File', 'Size': 27},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-6\\bbb.txt', 'Type': 'File', 'Size': 35},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-6', 'Type': 'Directory', 'Size': 62},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-7\\aaa.txt', 'Type': 'File', 'Size': 27},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-7\\bbb.txt', 'Type': 'File', 'Size': 35},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-7\\ccc.txt', 'Type': 'File', 'Size': 46},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-7\\ddd.txt', 'Type': 'File', 'Size': 63},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-7\\eee.txt', 'Type': 'File', 'Size': 60},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-7', 'Type': 'Directory', 'Size': 231},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-8\\bbb.txt', 'Type': 'File', 'Size': 35},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-8\\eee.txt', 'Type': 'File', 'Size': 60},
+#  {'Path': 'test\\test1\\test1-4\\test1-4-8', 'Type': 'Directory', 'Size': 95},
+#  {'Path': 'test\\test1\\test1-4\\aaa.txt', 'Type': 'File', 'Size': 27},
+#  {'Path': 'test\\test1\\aaa.txt', 'Type': 'File', 'Size': 27},
+#  {'Path': 'test\\test1\\bbb.txt', 'Type': 'File', 'Size': 35},
+#  {'Path': 'test\\test1\\ccc.txt', 'Type': 'File', 'Size': 46},
+#  {'Path': 'test\\test1\\ddd.txt', 'Type': 'File', 'Size': 63},
+#  {'Path': 'test\\test1\\eee.txt', 'Type': 'File', 'Size': 60}, {'Path': 'test', 'Type': 'Directory', 'Size': 2349},
+#  {'Path': 'test\\test2\\test2-1', 'Type': 'Directory', 'Size': 0},
+#  {'Path': 'test\\test2', 'Type': 'Directory', 'Size': 231},
+#  {'Path': 'test\\test2\\test2-2\\aaa.txt', 'Type': 'File', 'Size': 27},
+#  {'Path': 'test\\test2\\test2-2\\eee.txt', 'Type': 'File', 'Size': 60},
+#  {'Path': 'test\\test2\\test2-2', 'Type': 'Directory', 'Size': 87},
+#  {'Path': 'test\\test2\\test2-3\\test2-3-1\\ddd.txt', 'Type': 'File', 'Size': 63},
+#  {'Path': 'test\\test2\\test2-3\\test2-3-1', 'Type': 'Directory', 'Size': 63},
+#  {'Path': 'test\\test2\\test2-3', 'Type': 'Directory', 'Size': 63},
+#  {'Path': 'test\\test2\\bbb.txt', 'Type': 'File', 'Size': 35},
+#  {'Path': 'test\\test2\\ccc.txt', 'Type': 'File', 'Size': 46},
+#  {'Path': 'test\\test3\\fff.txt', 'Type': 'File', 'Size': 77}, {'Path': 'test\\test3', 'Type': 'Directory', 'Size': 77},
+#  {'Path': 'test\\test4\\test4-1\\test4-1-1\\aaa.txt', 'Type': 'File', 'Size': 27},
+#  {'Path': 'test\\test4\\test4-1\\test4-1-1', 'Type': 'Directory', 'Size': 27},
+#  {'Path': 'test\\test4\\test4-1', 'Type': 'Directory', 'Size': 434},
+#  {'Path': 'test\\test4\\test4-1\\test4-1-2\\bbb.txt', 'Type': 'File', 'Size': 35},
+#  {'Path': 'test\\test4\\test4-1\\test4-1-2\\ddd.txt', 'Type': 'File', 'Size': 63},
+#  {'Path': 'test\\test4\\test4-1\\test4-1-2\\ggg.txt', 'Type': 'File', 'Size': 97},
+#  {'Path': 'test\\test4\\test4-1\\test4-1-2', 'Type': 'Directory', 'Size': 195},
+#  {'Path': 'test\\test4\\test4-1\\test4-1-3\\aaa.txt', 'Type': 'File', 'Size': 27},
+#  {'Path': 'test\\test4\\test4-1\\test4-1-3\\bbb.txt', 'Type': 'File', 'Size': 35},
+#  {'Path': 'test\\test4\\test4-1\\test4-1-3', 'Type': 'Directory', 'Size': 62},
+#  {'Path': 'test\\test4\\test4-1\\aaa.txt', 'Type': 'File', 'Size': 27},
+#  {'Path': 'test\\test4\\test4-1\\ccc.txt', 'Type': 'File', 'Size': 46},
+#  {'Path': 'test\\test4\\test4-1\\fff.txt', 'Type': 'File', 'Size': 77},
+#  {'Path': 'test\\test4', 'Type': 'Directory', 'Size': 559},
+#  {'Path': 'test\\test4\\test4-2', 'Type': 'Directory', 'Size': 0},
+#  {'Path': 'test\\test4\\aaa.txt', 'Type': 'File', 'Size': 27},
+#  {'Path': 'test\\test4\\bbb.txt', 'Type': 'File', 'Size': 35},
+#  {'Path': 'test\\test4\\ddd.txt', 'Type': 'File', 'Size': 63}, {'Path': 'test\\aaa.txt', 'Type': 'File', 'Size': 27},
+#  {'Path': 'test\\bbb.txt', 'Type': 'File', 'Size': 35}, {'Path': 'test\\ccc.txt', 'Type': 'File', 'Size': 46},
+#  {'Path': 'test\\ddd.txt', 'Type': 'File', 'Size': 63}, {'Path': 'test\\eee.txt', 'Type': 'File', 'Size': 60},
+#  {'Path': 'test\\fff.txt', 'Type': 'File', 'Size': 77}, {'Path': 'test\\ggg.txt', 'Type': 'File', 'Size': 97}]
